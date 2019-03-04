@@ -1,10 +1,10 @@
 
 function Letter(character) {
-    // A string value to store the underlying character for the letter
+    // string containing value of character
     this.character = character;
-    // A boolean value that stores whether that letter has been guessed yet
+    // booleand determining if the letter has been corrected guessed or not
     this.guessed = false;
-    // A function that returns the underlying character if the letter has been guessed, or a placeholder (like an underscore) if the letter has not been guessed
+    // returns correctly guessed letter or a placeholder
     this.guessLetter = function() {
         if (this.guessed) {
             return this.character;
@@ -12,7 +12,8 @@ function Letter(character) {
             return '*';
         }
     };
-    // A function that takes a character as an argument and checks it against the underlying character, updating the stored boolean value to true if it was guessed correctly
+    // takes letter as arugment
+    // checks if letter is equal to the value of stored character
     this.checkGuess = function(letter) {
         if (this.character === letter) {
             this.guessed = true;

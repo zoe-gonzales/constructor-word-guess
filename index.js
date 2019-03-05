@@ -67,6 +67,7 @@ function updateGuessedArr() {
     // and the player ran out of guesses
     } else if (guessed.includes(false) && guessesLeft === 0) {
         console.log('You lost.');
+        console.log(`The word was ${wordToGuess}.`);
     // runs if all letters guessed correctly
     } else if (!guessed.includes(false)) {
         console.log('You won!');

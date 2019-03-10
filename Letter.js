@@ -2,7 +2,7 @@
 function Letter(character) {
     // string containing value of character
     this.character = character;
-    // booleand determining if the letter has been corrected guessed or not
+    // boolean determining if the letter has been corrected guessed or not
     this.guessed = false;
     // returns correctly guessed letter or a placeholder
     this.guessLetter = function() {

@@ -14,6 +14,7 @@ Node CLI game using Javascript constructors that enables the player to enter gue
 * Each guess (even a correct one) counts towards remaining guesses. At the start of the game, this is 15.
 * If letters remain to be guessed by the time all guesses are used, the word will be displayed and the player notified that they lost.
 * If all letters are correctly guessed, the player is notified that they won.
+* The player is then prompted whether or not they'd like to play again.
 
 ### Screenshots
 

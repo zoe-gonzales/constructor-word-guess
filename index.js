@@ -6,20 +6,28 @@ var Word = require('./Word');
 // Array holds all possible words to be guessed
 var gameWords = ['apple','apricot','avocado','banana','blackberry','blood orange','blueberry','boysenberry','cantaloupe','cherry','coconut','cranberry','date','dragon fruit','elderberry','fig','grape','grapefruit','guava','honeydew','jackfruit','kiwi','lemon','lime','lingonberry','lychee','mandarin orange','mango','melon','mulberry','nectarine','orange','papaya','passion fruit','peach','pear','persimmon','pineapple','plantain','plum','pluot','pomegranate','raisin','raspberry','star fruit','strawberry','tangelo','tangerine'];
 
-// default guesses left
-var guessesLeft = 15;
-// randomly selects word to guess
-var wordToGuess = gameWords[Math.floor(Math.random() * 48)];
-// creates instance of Word using random wordToGuess
-var word = new Word(wordToGuess);
-// building out array to use Word constructor
-word.populate();
-// Welcome
-console.log('Welcome to Word Guess! Today\'s topic is...fruit! Here\'s your word:');
-// logs placeholders representing letters in word
-word.toString();
-// Alerts player to remaining guesses
-console.log(`You have ${guessesLeft} guesses remaining.`);
+// global variables
+var guessesLeft;
+var wordToGuess;
+var word;
+
+function playGame(){
+    // default guesses left
+    guessesLeft = 15;
+    // randomly selects word to guess
+    wordToGuess = gameWords[Math.floor(Math.random() * 48)];
+    // creates instance of Word using random wordToGuess
+    word = new Word(wordToGuess);
+    // building out array to use Word constructor
+    word.populate();
+    // Welcome
+    console.log('Welcome to Word Guess! Today\'s topic is...fruit! Here\'s your word:');
+    // logs placeholders representing letters in word
+    word.toString();
+    // Alerts player to remaining guesses
+    console.log(`You have ${guessesLeft} guesses remaining.`);
+    guess();
+}
 
 // Prompts the user for each guess and keeps track of the user's remaining guesses
 function guess() {
@@ -48,7 +56,6 @@ function guess() {
         }     
     });
 }
-guess();
 
 // function checks status of each letter in the word. 
 // If all are guessed correctly, it alerts the user that they have won.
@@ -68,9 +75,31 @@ function updateGuessedArr() {
     } else if (guessed.includes(false) && guessesLeft === 0) {
         console.log('You lost.');
         console.log(`The word was ${wordToGuess}.`);
+        playAgain();
     // runs if all letters guessed correctly
     } else if (!guessed.includes(false)) {
         console.log('You won!');
+        playAgain();
     }
 }
 
+function playAgain(){
+    inquirer
+    .prompt(
+        {
+            name: 'playAgain',
+            message: 'Play again?',
+            type: 'confirm',
+            default: true
+        }
+    ).then(function(reply){
+        if (reply.playAgain){
+            playGame();
+        } else {
+            console.log('Come back again soon!');
+        }
+    });
+}
+
+// initialize game
+playGame(); 

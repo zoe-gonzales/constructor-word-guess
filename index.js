@@ -1,15 +1,14 @@
-
 // importing external files/packages
-var inquirer = require('inquirer');
-var Word = require('./Word');
+const inquirer = require('inquirer');
+const Word = require('./Word');
 
 // Array holds all possible words to be guessed
-var gameWords = ['apple','apricot','avocado','banana','blackberry','blood orange','blueberry','boysenberry','cantaloupe','cherry','coconut','cranberry','date','dragon fruit','elderberry','fig','grape','grapefruit','guava','honeydew','jackfruit','kiwi','lemon','lime','lingonberry','lychee','mandarin orange','mango','melon','mulberry','nectarine','orange','papaya','passion fruit','peach','pear','persimmon','pineapple','plantain','plum','pluot','pomegranate','raisin','raspberry','star fruit','strawberry','tangelo','tangerine'];
+const gameWords = ['apple','apricot','avocado','banana','blackberry','blood orange','blueberry','boysenberry','cantaloupe','cherry','coconut','cranberry','date','dragon fruit','elderberry','fig','grape','grapefruit','guava','honeydew','jackfruit','kiwi','lemon','lime','lingonberry','lychee','mandarin orange','mango','melon','mulberry','nectarine','orange','papaya','passion fruit','peach','pear','persimmon','pineapple','plantain','plum','pluot','pomegranate','raisin','raspberry','star fruit','strawberry','tangelo','tangerine'];
 
 // global variables
-var guessesLeft;
-var wordToGuess;
-var word;
+let guessesLeft;
+let wordToGuess;
+let word;
 
 function playGame(){
     // default guesses left
@@ -37,14 +36,13 @@ function guess() {
             name: 'guess',
             message: 'Your guess:'
         }
-    ).then(function(reply) {
+    ).then(reply => {
         // checking that they only enter one letter at a time
         if (reply.guess.length > 1) {
             console.log('Please guess one letter at a time.');
             guess();
         } else {
-            //save inquirer response to var
-            var userGuess = reply.guess; 
+            let userGuess = reply.guess; 
             // pass through testLetter method
             word.testLetter(userGuess); 
             // decrement guessesLeft
@@ -60,23 +58,21 @@ function guess() {
 // function checks status of each letter in the word. 
 // If all are guessed correctly, it alerts the user that they have won.
 function updateGuessedArr() {
-    var guessed = [];
+    let guessed = [];
     // takes stock of letters that have not yet been correctly guessed
     // saves to guessed array
-    for (var i=0; i < word.lettersInWord.length; i++) {
-        guessed.push(word.lettersInWord[i].guessed);
-    }
+    word.lettersInWord.map(letter => guessed.push(letter.guessed));
+
     // conditionals check for status of game
-    // first continues game
+
+    // 1) continues game
     if (guessed.includes(false) && guessesLeft > 0) {
         guess();
-    // second runs if there are remaining letters 
-    // and the player ran out of guesses
+    // 2) runs if there are remaining letters and the player ran out of guesses
     } else if (guessed.includes(false) && guessesLeft === 0) {
-        console.log('You lost.');
-        console.log(`The word was ${wordToGuess}.`);
+        console.log(`You lost.\n The word was ${wordToGuess}.`);
         playAgain();
-    // runs if all letters guessed correctly
+    // 3) runs if all letters guessed correctly
     } else if (!guessed.includes(false)) {
         console.log('You won!');
         playAgain();
@@ -92,12 +88,9 @@ function playAgain(){
             type: 'confirm',
             default: true
         }
-    ).then(function(reply){
-        if (reply.playAgain){
-            playGame();
-        } else {
-            console.log('Come back again soon!');
-        }
+    ).then(reply => {
+        if (reply.playAgain) playGame();
+        else console.log('Come back again soon!');
     });
 }
 
